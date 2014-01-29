@@ -1,0 +1,56 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+<head>
+<title>libxmp for JavaScript</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="author" content="Shlomi Fish" />
+<link rel="stylesheet" href="style.css" type="text/css" media="screen, projection" title="Normal" />
+<link rel="stylesheet" href="print.css" type="text/css" media="print" />
+<script type="text/javascript" src="common-methods.js"></script>
+<script type="text/javascript" src="jq.js"></script>
+<script type="text/javascript">
+(function() {
+    try {
+        var a = new Float64Array(1);
+        return; //no need
+    } catch(e) { window.location.replace("../../js-fc-solve/incompatible-browser.html"); }
+})();
+</script>
+<script type="text/javascript" src="libxmp.js"></script>
+</head>
+<body>
+<div class="header" id="header">
+</div>
+<div id="faux">
+<div id="container-all">
+<div class="main" id="main">
+<h1>Online libxmp</h1>
+<h2 id="about">About</h2>
+<div id="about_sect">
+<p>
+An online libxmp version.
+</p>
+<script type="text/javascript">
+$(function() { $('.enable_js').addClass('ok'); })
+</script>
+</div>
+<h2 id="ui">Solver</h2>
+<div class="disabled">
+<div class="emscripten" id="status">Downloading...</div>
+<div class="emscripten">
+<!--
+  <progress value="0" max="100" id="progress"></progress>
+-->
+</div>
+<!--
+<canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+-->
+</div>
+</div>
+</div>
+</div>
+<script type="text/javascript" src="main_source.js"></script>
+</body>
+</html>
