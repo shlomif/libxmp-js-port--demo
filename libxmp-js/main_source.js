@@ -20,9 +20,12 @@ function wrap_mi_p(name) {
     return Module.cwrap(name, 'number', ['number']);
 }
 
+var mi_p_size = Module.cwrap('xmp_js__sizeof', 'number', [])();
 var xmp_js__mi_get_loop_count = wrap_mi_p('xmp_js__mi_get_loop_count');
 var xmp_js__mi_get_buffer  = wrap_mi_p('xmp_js__mi_get_buffer');
 var xmp_js__mi_get_buffer_size  = wrap_mi_p('xmp_js__mi_get_buffer_size');
+
+var freq = 11025;
 
 function my_xmp_play(append_cb) {
     var c = xmp_create_context();
@@ -31,9 +34,9 @@ function my_xmp_play(append_cb) {
         return 1;
     }
 
-    xmp_start_player(c, 44100, 0);
+    xmp_start_player(c, freq, 0);
 
-    var mi_p = malloc(1024);
+    var mi_p = malloc(mi_p_size);
 
     function as_hex(i) {
         return "0123456789ABCDEF".substring(i, i+1);
@@ -53,7 +56,7 @@ function my_xmp_play(append_cb) {
 
             var out_s = '';
             for (var i = 0 ; i < buf_size ; i++) {
-                var my_char = getValue(buf + i, 'i8');
+                var my_char = unSign(getValue(buf + i, 'i8'), 8);
                 out_s += "\\x" + as_hex(my_char >> 4) + as_hex(my_char & 0xF);
             }
             append_cb(out_s);
@@ -70,7 +73,7 @@ function my_xmp_play(append_cb) {
 var xmp_out = $('#xmp_output');
 var total_buf = '';
 my_xmp_play(function (s) {
-    total_buf += s;
+    total_buf += s + "\n";
 
     return;
 });
