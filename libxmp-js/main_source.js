@@ -1,12 +1,14 @@
 "use strict";
 
-var fopen = Module.cwrap('fopen', 'number', ['string','string']);
+// var fopen = Module.cwrap('fopen', 'number', ['string','string']);
 
 var xmp_create_context = Module.cwrap('xmp_create_context', 'number', []);
 var xmp_load_module = Module.cwrap('xmp_load_module', 'number', ['number', 'string']);
 var xmp_start_player = Module.cwrap('xmp_start_player', 'number', ['number', 'number', 'number']);
+var xmp_get_frame_info = Module.cwrap('xmp_get_frame_info', 'number', ['number', 'number', 'number']);
 var xmp_play_frame = Module.cwrap('xmp_play_frame', 'number', ['number']);
 var xmp_end_player = Module.cwrap('xmp_end_player', 'number', ['number']);
+var xmp_free_context = Module.cwrap('xmp_free_context', 'number', ['number']);
 var xmp_release_module = Module.cwrap('xmp_release_module', 'number', ['number']);
 var xmp_end_player = Module.cwrap('xmp_end_player', 'number', ['number']);
 
@@ -51,8 +53,8 @@ function my_xmp_play(append_cb) {
 
             var out_s = '';
             for (var i = 0 ; i < buf_size ; i++) {
-                var mychar = getValue(buf + i, 'i8');
-                out_s += "\\x" + as_hex(mychar >> 4) + as_hex(my_char & 0xF);
+                var my_char = getValue(buf + i, 'i8');
+                out_s += "\\x" + as_hex(my_char >> 4) + as_hex(my_char & 0xF);
             }
             append_cb(out_s);
         }
@@ -66,8 +68,10 @@ function my_xmp_play(append_cb) {
 }
 
 var xmp_out = $('#xmp_output');
+var total_buf = '';
 my_xmp_play(function (s) {
-    xmp_out.val(xmp_out.val() + s);
+    total_buf += s;
 
     return;
 });
+xmp_out.val(total_buf);
